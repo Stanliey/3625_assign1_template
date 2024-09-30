@@ -5,7 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 """
-First attempt to push - Khanh Le
+Stanley comment 
 """
 
 def find_route(locations: pd.DataFrame) -> list | np.ndarray:
