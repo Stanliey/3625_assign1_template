@@ -4,6 +4,9 @@ import time
 import numpy as np
 import matplotlib.pyplot as plt
 
+"""
+First attempt to push - Khanh Le
+"""
 
 def find_route(locations: pd.DataFrame) -> list | np.ndarray:
     """
