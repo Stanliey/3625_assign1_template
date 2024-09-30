@@ -33,17 +33,27 @@ if __name__ == '__main__':
 
     # here's an example of how to call find_route (and time it)
     tsp = pd.read_csv('./data/10a.csv', index_col=0)
-    start_time = time.time()
-    route = find_route(tsp)
-    elapsed = time.time() - start_time
+
+    #firstRow = tsp.iloc[2] # retrieve the row information by row index 
+    #value = tsp.loc[1, 'x'] #retrieve the specific value with indexed row
+    new_tsp = tsp.iloc[[1, 2]].reset_index(drop=True)
+    print(new_tsp)
+    route = [0,1]  # From index 1 to 2 to 3 and back to 1
+    # Call the measure_distance function
+    total_distance = evaluation.measure_distance(new_tsp, route)
+    print(total_distance)
+
+    #start_time = time.time()
+    #route = find_route(tsp)
+    #elapsed = time.time() - start_time
 
     # use the provided distance calculation function to measure route distance
-    distance = evaluation.measure_distance(tsp, route)
-    print(f'found a route with distance {distance:.2f} in {elapsed:.4f}s')
+    #distance = evaluation.measure_distance(tsp, route)
+    #print(f'found a route with distance {distance:.2f} in {elapsed:.4f}s')
 
     # plot route
-    evaluation.plot_route(tsp, route)
-    plt.title(f'distance={distance:.2f}')
-    plt.xticks([])
-    plt.yticks([])
-    plt.show()
+    #evaluation.plot_route(tsp, route)
+    #plt.title(f'distance={distance:.2f}')
+    # plt.xticks([])
+    # plt.yticks([])
+    # plt.show()

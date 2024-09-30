@@ -12,7 +12,7 @@ def measure_distance(locations: pd.DataFrame, route: list | np.ndarray) -> float
                    too - the route will be assumed to return to the origin city after the list's last entry
     :return: the total distance of the specified route
     """
-    assert len(set(route)) == locations.shape[0]
+    assert len(set(route)) == locations.shape[0] #the route has to have all the locations
 
     # convert to numpy and tack the origin city onto the end of the route
     locations = locations.to_numpy()
