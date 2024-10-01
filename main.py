@@ -1,12 +1,9 @@
 import pandas as pd
-import evaluation
 import time
 import numpy as np
 import matplotlib.pyplot as plt
+import nearest_neighbour
 
-"""
-Khanh Le's 2nd attempt
-"""
 
 def find_route(locations: pd.DataFrame) -> list | np.ndarray:
     """
@@ -36,12 +33,22 @@ if __name__ == '__main__':
 
     #firstRow = tsp.iloc[2] # retrieve the row information by row index 
     #value = tsp.loc[1, 'x'] #retrieve the specific value with indexed row
-    new_tsp = tsp.iloc[[1, 2]].reset_index(drop=True)
-    print(new_tsp)
-    route = [0,1]  # From index 1 to 2 to 3 and back to 1
+
+    #tsp = tsp.drop(index = 5)
+    #print(tsp.iloc[5])
+
+    #new_tsp = tsp.iloc[[1, 2]].reset_index(drop=True)
+    #print(f"the format should be: \n{tsp.iloc[[1, 2]]}\n")
+   # route = [0,1]  # From index 1 to 2 to 3 and back to 1
     # Call the measure_distance function
-    total_distance = evaluation.measure_distance(new_tsp, route)
-    print(total_distance)
+
+    init_sol, init_distance = nearest_neighbour.find_init_pop (tsp)
+    print (f"init_sol: {init_sol}\ninit_distance: {init_distance}")
+    #total_distance = evaluation.measure_distance(new_tsp, route)
+    #print(total_distance)
+
+
+
 
     #start_time = time.time()
     #route = find_route(tsp)
