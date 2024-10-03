@@ -2,7 +2,10 @@ import pandas as pd
 import time
 import numpy as np
 import matplotlib.pyplot as plt
-import nearest_neighbour
+import nearest_neighbour as nn
+import genetic as ga
+import evaluation
+import warnings
 
 
 def find_route(locations: pd.DataFrame) -> list | np.ndarray:
@@ -22,47 +25,43 @@ def find_route(locations: pd.DataFrame) -> list | np.ndarray:
     # note you can convert the DataFrame of x-y coordinates to a 2-d numpy array like this: locations.to_numpy()
 
     # the following line returns the simple route that visits locations in the order from the data file
-    # (replace it with your code)
-    return tsp.index
+
+    init_sol = []
+
+    num_parents_mating = 10
+
+    for i in range (num_parents_mating):
+
+        sub_sol, _ = nn.nearest_neighbor_tour(tsp)
+        
+        init_sol.append(sub_sol)
+
+    return ga.run_ga (locations, init_sol, num_parents_mating)
 
 
 if __name__ == '__main__':
 
+    # ignore the warning
+    warnings.filterwarnings("ignore", message = "The 'delay_after_gen' parameter is deprecated starting from PyGAD 3.3.0.")
+
     # here's an example of how to call find_route (and time it)
     tsp = pd.read_csv('./data/250a.csv', index_col=0)
-
-    #firstRow = tsp.iloc[2] # retrieve the row information by row index 
-    #value = tsp.loc[1, 'x'] #retrieve the specific value with indexed row
-
-    #tsp = tsp.drop(index = 5)
-    #print(tsp.iloc[5])
-
-    #new_tsp = tsp.iloc[[1, 2]].reset_index(drop=True)
-    #print(f"the format should be: \n{tsp.iloc[[1, 2]]}\n")
-   # route = [0,1]  # From index 1 to 2 to 3 and back to 1
-    # Call the measure_distance function
-
+    
     start_time = time.time()
-    init_sol,init_distance = nearest_neighbour.nearest_neighbor_tour(tsp)
-    elapsed = time.time() - start_time
-    #print (f"init_sol: {init_sol}\ninit_distance: {init_distance} in {elapsed}s")
-    #total_distance = evaluation.measure_distance(new_tsp, route)
-    #print(total_distance)
 
-
-
-
-    #start_time = time.time()
-    #route = find_route(tsp)
-    #elapsed = time.time() - start_time
+    route, route_fitness = find_route(tsp)
+    
+    elapsed = round((time.time() - start_time), 2)
+ 
+    print (f"Route: {route}\nfitness: {route_fitness}\n")
 
     # use the provided distance calculation function to measure route distance
-    #distance = evaluation.measure_distance(tsp, route)
-    #print(f'found a route with distance {distance:.2f} in {elapsed:.4f}s')
+    distance = evaluation.measure_distance(tsp, route)
+    print(f'found a route with distance {distance:.2f} in {elapsed:.4f}s')
 
     # plot route
-    #evaluation.plot_route(tsp, route)
-    #plt.title(f'distance={distance:.2f}')
-    # plt.xticks([])
-    # plt.yticks([])
-    # plt.show()
+    evaluation.plot_route(tsp, route)
+    plt.title(f'distance={distance:.2f}')
+    plt.xticks([])
+    plt.yticks([])
+    plt.show()

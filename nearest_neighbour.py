@@ -41,7 +41,6 @@ def nearest_neighbor_tour(data_points):
             visited[nearest_index] = True
             
             # Move to the nearest point
-            print(nearest_index)
             visit_order_indices.append(int(nearest_index))
             
             # Update the current point
