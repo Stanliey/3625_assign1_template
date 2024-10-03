@@ -43,9 +43,9 @@ if __name__ == '__main__':
     # Call the measure_distance function
 
     start_time = time.time()
-    init_sol,init_distance = nearest_neighbour.nearest_neighbor_tour(tsp.to_numpy())
+    init_sol,init_distance = nearest_neighbour.nearest_neighbor_tour(tsp)
     elapsed = time.time() - start_time
-    print (f"init_sol: {init_sol}\ninit_distance: {init_distance} in {elapsed}s")
+    #print (f"init_sol: {init_sol}\ninit_distance: {init_distance} in {elapsed}s")
     #total_distance = evaluation.measure_distance(new_tsp, route)
     #print(total_distance)
 
