@@ -29,7 +29,7 @@ def find_route(locations: pd.DataFrame) -> list | np.ndarray:
 if __name__ == '__main__':
 
     # here's an example of how to call find_route (and time it)
-    tsp = pd.read_csv('./data/10a.csv', index_col=0)
+    tsp = pd.read_csv('./data/250a.csv', index_col=0)
 
     #firstRow = tsp.iloc[2] # retrieve the row information by row index 
     #value = tsp.loc[1, 'x'] #retrieve the specific value with indexed row
@@ -42,8 +42,10 @@ if __name__ == '__main__':
    # route = [0,1]  # From index 1 to 2 to 3 and back to 1
     # Call the measure_distance function
 
-    init_sol, init_distance = nearest_neighbour.find_init_pop (tsp)
-    print (f"init_sol: {init_sol}\ninit_distance: {init_distance}")
+    start_time = time.time()
+    init_sol,init_distance = nearest_neighbour.nearest_neighbor_tour(tsp.to_numpy())
+    elapsed = time.time() - start_time
+    print (f"init_sol: {init_sol}\ninit_distance: {init_distance} in {elapsed}s")
     #total_distance = evaluation.measure_distance(new_tsp, route)
     #print(total_distance)
 
