@@ -1,31 +1,27 @@
 import pandas as pd
-import evaluation
-import random
 import numpy as np
 from scipy.spatial import KDTree
-import matplotlib.pyplot as plt
+import random
 
-# data_points are two 2d array
 def nearest_neighbor_tour(data_points):
-    # Start from a random location in the data points
+    # Start from a random location in the DataFrame indices
     start_index = random.randint(0, len(data_points) - 1)
-    current_point = data_points[start_index]
+    current_point = data_points.iloc[start_index].to_numpy()
 
     # Create a KDTree from the data points
     kdtree = KDTree(data_points)
 
     # List to keep track of visited points
     visited = [False] * len(data_points)
-    # Mark the starting index as visited
     visited[start_index] = True
 
-    # To store the order of visited points
-    visit_order = [current_point]
+    # To store the order of visited points' indices
+    visit_order_indices = [start_index]
 
     total_distance = 0.0
 
     # Continue visiting until all points are visited
-    while len(visit_order) < len(data_points):
+    while len(visit_order_indices) < len(data_points):
         # Find the nearest neighbor among unvisited points
         distances, indices = kdtree.query(current_point, k=len(data_points))
 
@@ -35,7 +31,7 @@ def nearest_neighbor_tour(data_points):
         if unvisited_indices:
             # Get the nearest unvisited point
             nearest_index = unvisited_indices[0]
-            nearest_point = data_points[nearest_index]
+            nearest_point = data_points.iloc[nearest_index].to_numpy()
 
             # Calculate the distance to the nearest point
             distance = np.linalg.norm(current_point - nearest_point)
@@ -45,12 +41,12 @@ def nearest_neighbor_tour(data_points):
             visited[nearest_index] = True
             
             # Move to the nearest point
-            visit_order.append(nearest_point)
+            print(nearest_index)
+            visit_order_indices.append(int(nearest_index))
             
             # Update the current point
             current_point = nearest_point
         else:
             break
-
-    # Return total distance and the order of visited points
-    return total_distance, visit_order
+    # Return total distance and the order of visited indices
+    return visit_order_indices,total_distance
