@@ -2,12 +2,44 @@ Question 1:
 For a problem with 100 cities, how long would it take to exhaustively examine every possible route?
 State your assumptions and explain how you arrived at your answer.
 
-
+To exhaustively examine every possible route, brute approach can be applied to achieve this goal.
+By using brute force, for each location, we have to determine all the possible route that connected 
+to that but excluding the location itself. 
+For example: If we have 3 cities A,B,C
+                    A 
+                   / \
+                  B   C    (n - 1)
+                  |   |
+                  C   B    (n - 2)
+Therefore, we expect the time complexity taken for this approach is (100−1)! = 99!
 
 Question 2:
 What can you say about the time complexity of your approach? (ignore the time limit)
+n = number of data points
 
+For KD tree: 
+** KD Tree Construction: Recursively  partitioning the points along different dimensions 
+(like x and y) to build the tree. This takes O(nlog n)
+** Nearest Neighbour Search: For each point, you query the KD tree to find neareast
+unvisited neighbour. The time complexity of querying a KD tree is O(log n) in average 
+cases. However, in case of poorly distributed data points (ie: data points lie on the 
+straight line), the time complexity can be degrated to O(n)
+Total complexity in average case: O(n log n):Construction + O(n log n):Search = O(n log n)
+Total complexity in worst case: O(n log n):Construction + O(n^2):Search = O(n^2)
 
+For Genetic Algorithms:
+Genetic Algorithms calculate the fitness score for every individual in the population, then select a number of parents to mate and produce the next generation. 
+Since the number of individuals in each generation is the same as the population size, the time complexity can be described as:
+𝑂(p * g * f) where p: population size ; g number of generations ; 
+
+𝑂(n log n + p × g * n) 
+                    |
+                    v
+            Fitness Evaluation - Evaluating the fitness of each tour takes O(n) time (since each tour has n cities).
 
 Question 3:
 If your program was seen as an "agent program", which of the agent types discussed in class would it be?
+Goal-Based Agents are designed to make decisions that help them achieve a specific goal, rather than just react to the current state 
+of the world (as a reflex agent might). In the case of TSP, the agent’s goal is to find the shortest possible route that allows it to visit a 
+set of cities and return to the starting point. In other words, for every agent's decision to take action, it is driven by the goal
+to find the reasonably shortest route.
