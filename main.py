@@ -28,15 +28,17 @@ def find_route(locations: pd.DataFrame) -> list | np.ndarray:
 
     init_sol = []
 
+    # number of routes needed from nearest_neighbor tour
     sol_per_pop = 10
 
+    
     for i in range (sol_per_pop):
 
         sub_sol, _ = nn.nearest_neighbor_tour(tsp)
         
         init_sol.append(sub_sol)
 
-    return ga.run_ga (locations, init_sol, sol_per_pop)
+    return ga.run_ga (locations, init_sol)
 
 
 if __name__ == '__main__':
