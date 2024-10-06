@@ -28,15 +28,15 @@ def find_route(locations: pd.DataFrame) -> list | np.ndarray:
 
     init_sol = []
 
-    num_parents_mating = 10
+    sol_per_pop = 10
 
-    for i in range (num_parents_mating):
+    for i in range (sol_per_pop):
 
         sub_sol, _ = nn.nearest_neighbor_tour(tsp)
         
         init_sol.append(sub_sol)
 
-    return ga.run_ga (locations, init_sol, num_parents_mating)
+    return ga.run_ga (locations, init_sol, sol_per_pop)
 
 
 if __name__ == '__main__':
@@ -52,8 +52,6 @@ if __name__ == '__main__':
     route, route_fitness = find_route(tsp)
     
     elapsed = round((time.time() - start_time), 2)
- 
-    print (f"Route: {route}\nfitness: {route_fitness}\n")
 
     # use the provided distance calculation function to measure route distance
     distance = evaluation.measure_distance(tsp, route)

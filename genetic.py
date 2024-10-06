@@ -50,10 +50,9 @@ def run_ga(locations: pd.DataFrame, init_sol, mating_num):
     
         return fitness
     
-    ga_instance = pygad.GA(num_generations=250,
-                       num_parents_mating=mating_num,
+    ga_instance = pygad.GA(num_generations=100,
+                       num_parents_mating=8,
                        fitness_func=fitness_func,
-                       sol_per_pop=5000,
                        num_genes=locations.shape[0],
                        initial_population=init_sol,
                        parent_selection_type='rws',
